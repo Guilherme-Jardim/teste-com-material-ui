@@ -1,3 +1,11 @@
-export default function Page() {
-  return <h1 className="text-3xl font-bold underline">Hello, Next.js!</h1>
+"use client";
+import { Button, ThemeProvider } from '@mui/material'
+import { LightTheme } from '../themes/Light';
+
+export default function Home() {
+  return (
+    <ThemeProvider theme={LightTheme}>
+      <Button>TESTE</Button>
+    </ThemeProvider>
+  )
 }
