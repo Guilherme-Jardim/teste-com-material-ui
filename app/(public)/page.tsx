@@ -1,11 +1,15 @@
 "use client";
 import { Button, ThemeProvider } from '@mui/material'
 import { LightTheme } from '../themes/Light';
+import { useAppThemeContext } from '../components/shared/contexts/ThemeContext';
+
+
 
 export default function Home() {
+
+
   return (
-    <ThemeProvider theme={LightTheme}>
-      <Button>TESTE</Button>
-    </ThemeProvider>
+    <Button>trocar</Button>
+
   )
 }

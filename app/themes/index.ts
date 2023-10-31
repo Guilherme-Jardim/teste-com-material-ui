@@ -1,1 +1,2 @@
-import * as Light from './Light'
+export * from './Light';
+export * from './Dark';
