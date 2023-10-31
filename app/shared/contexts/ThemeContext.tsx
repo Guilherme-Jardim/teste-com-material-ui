@@ -1,8 +1,7 @@
 "use client";
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import { ThemeProvider } from '@mui/material';
-import { Box } from '@mui/system';
+import { ReactNode, createContext, useCallback, useContext, useMemo, useState } from 'react';
 import { LightTheme, DarkTheme } from '@/app/themes';
+import { Box, ThemeProvider } from '@mui/material';
 
 
 interface IThemeContextData {
@@ -17,9 +16,9 @@ export const useAppThemeContext = () => {
 };
 
 interface IAppThemeProviderProps {
-  children: React.ReactNode
+  children: ReactNode
 }
-export const AppThemeProvider: React.FC<IAppThemeProviderProps> = ({ children }) => {
+export const AppThemeProvider = ({ children }: IAppThemeProviderProps) => {
   const [themeName, setThemeName] = useState<'light' | 'dark'>('light');
 
   const toggleTheme = useCallback(() => {
