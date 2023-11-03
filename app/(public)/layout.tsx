@@ -42,13 +42,15 @@ const PLACEHOLDER_LINKS = [
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+
   return (
     <html lang="en">
       <body>
         <ThemeRegistry>
           <AppBar position="fixed" sx={{ zIndex: 2000 }}>
             <Toolbar sx={{ backgroundColor: 'background.paper' }}>
-              <DashboardIcon sx={{ color: '#444', mr: 2, transform: 'translateY(-2px)' }} />
+              <DashboardIcon color="primary"
+                sx={{ mr: 2, transform: 'translateY(-2px)' }} />
               <Typography variant="h6" color="text.primary">
                 Next.js App Router
               </Typography>
@@ -75,7 +77,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <ListItem key={href} disablePadding>
                   <ListItemButton component={Link} href={href}>
                     <ListItemIcon>
-                      <Icon />
+                      <Icon color="primary" />
                     </ListItemIcon>
                     <ListItemText primary={text} />
                   </ListItemButton>
@@ -88,7 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <ListItem key={text} disablePadding>
                   <ListItemButton>
                     <ListItemIcon>
-                      <Icon />
+                      <Icon color="primary" />
                     </ListItemIcon>
                     <ListItemText primary={text} />
                   </ListItemButton>

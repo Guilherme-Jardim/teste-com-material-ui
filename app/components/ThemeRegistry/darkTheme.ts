@@ -1,5 +1,6 @@
 import { Quicksand } from 'next/font/google';
 import { createTheme } from '@mui/material/styles';
+import HomeIcon from '@mui/icons-material/Home';
 import {
   blueGrey,
   common,
@@ -106,8 +107,8 @@ export const darkTheme = createTheme({
   typography: {
     fontFamily: quicksand.style.fontFamily,
   },
-
   components: {
+                
     MuiAlert: {
       styleOverrides: {
         root: ({ ownerState }) => ({

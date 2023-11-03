@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useAppThemeContext } from '../context/theme/useAppTheme';
 import { darkTheme, lightTheme } from '../components/ThemeRegistry/theme';
+import Typography from '@mui/material/Typography';
 
 export default function HomePage() {
   const { themeName, toggleTheme } = useAppThemeContext();
@@ -15,10 +16,13 @@ export default function HomePage() {
   return (
     <Box sx={{ display: 'flex' }}>
       <Button
+        variant='contained'
         onClick={toggleButtonHandler}
       >
         Trocar theme
+        Trocar theme
       </Button>
+      <Typography>teste</Typography>
     </Box >
   );
 }
