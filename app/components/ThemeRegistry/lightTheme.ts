@@ -5,7 +5,6 @@ import {
   blueGrey,
   common,
   grey,
-  deepPurple,
   lightBlue,
   orange,
   red,
@@ -28,9 +27,9 @@ declare module '@mui/material/TextField' {
 export const lightTheme = createTheme({
   palette: {
     primary: {
-      main: deepPurple[700],
-      light: deepPurple[600],
-      dark: deepPurple[800],
+      main: grey[700],
+      light: grey[600],
+      dark: grey[800],
       contrastText: common.white,
     },
     secondary: {

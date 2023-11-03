@@ -14,7 +14,7 @@ export default function HomePage() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ placeSelf: 'self-start', height: '100%', display: 'flex', background: 'red' }}>
       <Button
         variant='contained'
         onClick={toggleButtonHandler}

@@ -4,12 +4,10 @@ import HomeIcon from '@mui/icons-material/Home';
 import {
   blueGrey,
   common,
-  grey,
   lightBlue,
   orange,
-  deepPurple,
+  grey,
   red,
-  pink,
 } from '@mui/material/colors';
 
 declare module '@mui/material/styles' {
@@ -54,9 +52,9 @@ const quicksand = Quicksand({
 export const darkTheme = createTheme({
   palette: {
     primary: {
-      main: deepPurple[600],
-      light: deepPurple[500],
-      dark: deepPurple[700],
+      main: grey[600],
+      light: grey[500],
+      dark: grey[700],
       contrastText: common.white,
     },
     secondary: {
@@ -224,7 +222,7 @@ export const darkTheme = createTheme({
         track: {
           backgroundColor: grey[50],
           '.Mui-checked.Mui-checked + &': {
-            backgroundColor: deepPurple[400],
+            backgroundColor: grey[400],
           },
         },
       },
@@ -233,7 +231,7 @@ export const darkTheme = createTheme({
       styleOverrides: {
         indicator: {
           marginBottom: 2,
-          backgroundColor: deepPurple[500],
+          backgroundColor: grey[500],
         },
       },
     },
@@ -297,7 +295,7 @@ export const darkTheme = createTheme({
         root: {
           '&.MuiPickersDay-root': {
             ':hover': {
-              backgroundColor: deepPurple[500],
+              backgroundColor: grey[500],
             },
           },
           '&.MuiMenuItem-root .MuiMultiSectionDigitalClockSection-item': {
