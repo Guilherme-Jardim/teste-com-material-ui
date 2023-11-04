@@ -43,7 +43,7 @@ export function GSideNav({ children }: GSideNavProps) {
         </Toolbar>
       </AppBar>
       <Box display='flex'>
-        <Drawer variant='persistent' anchor="left" open={open} onClose={toggleDrawer}
+        <Drawer variant={smDown ? 'temporary' : 'persistent'} anchor="left" open={open} onClose={toggleDrawer}
           sx={{
             transition: 'margin 225ms cubic-bezier(0.4, 0, 0.6, 1)',
           }}
@@ -77,7 +77,7 @@ export function GSideNav({ children }: GSideNavProps) {
           paddingTop={10}
           height='100vh'
           sx={{
-            marginLeft: open ? theme.spacing(30) : 2,
+            marginLeft: open ? (smDown ? 2 : theme.spacing(30)) : 2,
             transition: 'margin 225ms cubic-bezier(0.4, 0, 0.6, 1)',
           }}
         >
