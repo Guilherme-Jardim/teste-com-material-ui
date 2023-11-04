@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AppBar,
   Avatar,
@@ -19,6 +19,17 @@ import HomeIcon from '@mui/icons-material/Home';
 import { useMediaQuery } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
+interface ListItemLink {
+  label: string;
+  children: ReactNode;
+  to: string;
+  onClick?: (event: React.MouseEvent) => void; // Use React.MouseEvent para eventos de React
+}
+
+
 
 interface GSideNavProps {
   children: ReactNode;
@@ -32,6 +43,37 @@ export function GSideNav({ children }: GSideNavProps) {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const ListItemLink = ({ children, label, to, onClick }: ListItemLink) => {
+    const handleClick = (event: React.MouseEvent) => {
+      onClick?.(event);
+    };
+
+    return (
+      <Link href={to} style={{ textDecoration: "none", color: "inherit" }}>
+        <ListItemButton onClick={handleClick}>
+          <ListItemIcon>
+            {children}
+          </ListItemIcon>
+          <ListItemText primary={label} />
+        </ListItemButton>
+      </Link>
+    );
+  };
+
+  const ItemsList = [
+    { label: "Página Inicial", to: "/", children: <HomeIcon /> },
+    { label: "Sobre", to: "/about", },
+    { label: "Contato", to: "/contact" },
+  ];
+
+  const ItemsListMap = ItemsList.map((item) => {
+    return (
+      <ListItemLink key={item.label} label={item.label} to={item.to}>
+        {item.children}
+      </ListItemLink>
+    );
+  });
 
   return (
     <>
@@ -63,16 +105,11 @@ export function GSideNav({ children }: GSideNavProps) {
 
             <Box flex={1}>
               <List component="nav">
-                <ListItemButton>
-                  <ListItemIcon>
-                    <HomeIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Página Inicial" />
-                </ListItemButton>
+                {ItemsListMap}
               </List>
             </Box>
           </Box>
-        </Drawer>
+        </Drawer >
         <Box
           paddingTop={10}
           height='100vh'
@@ -83,7 +120,7 @@ export function GSideNav({ children }: GSideNavProps) {
         >
           {children}
         </Box>
-      </Box>
+      </Box >
     </>
   );
 }
