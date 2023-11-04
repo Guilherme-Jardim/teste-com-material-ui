@@ -28,10 +28,6 @@ export function AppThemeProvider({ children }: ThemeProviderProps) {
   const toggleTheme = useCallback(() => {
     const newTheme = themeName === 'light' ? 'dark' : 'light';
     setThemeName(newTheme);
-    setCookie(undefined, 'nextTheme.mode', newTheme, {
-      maxAge: 30 * 24 * 60 * 60, // 1 mes
-      path: '/',
-    });
   }, [themeName]);
 
   const theme = useMemo(() => {
