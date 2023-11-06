@@ -2,7 +2,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -28,7 +27,7 @@ function Copyright(props: any) {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export function GLogin() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -47,7 +46,6 @@ export default function SignIn() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
@@ -62,7 +60,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -88,7 +86,7 @@ export default function SignIn() {
             label="Remember me"
           />
 
-          <Link href='/dashboard' >
+          <Link prefetch={false} passHref href='/dashboard' >
             <Button
               type="button"
               fullWidth
@@ -100,12 +98,12 @@ export default function SignIn() {
           </Link>
           <Grid container>
             <Grid item xs>
-              <Link style={{ textDecoration: "none", color: "inherit" }} href="#">
+              <Link style={{ textDecoration: "none", color: "inherit" }} href="/">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link style={{ textDecoration: "none", color: "inherit" }} href="#">
+              <Link style={{ textDecoration: "none", color: "inherit" }} href="/">
                 {"Don't have an account? Sign Up"}
               </Link>
 
@@ -122,7 +120,13 @@ export default function SignIn() {
           Alterar Theme
         </Button>
       </Box>
+      <Link href="/teste1">
+        <Button> teste public1</Button>
+      </Link>
       <Copyright sx={{ mt: 8, mb: 4 }} />
+      <Link href="/teste1">
+        <Button> teste public1</Button>
+      </Link>
     </Container>
   );
 }

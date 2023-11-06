@@ -1,4 +1,3 @@
-'use client'
 import React, { useEffect, useState } from 'react';
 import {
   AppBar,
@@ -20,7 +19,6 @@ import { useMediaQuery } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 interface ListItemLink {
   label: string;
@@ -29,20 +27,15 @@ interface ListItemLink {
   onClick?: (event: React.MouseEvent) => void; // Use React.MouseEvent para eventos de React
 }
 
-
-
 interface GSideNavProps {
-  children: ReactNode;
+  children: React.ReactNode;
+  isDrawerOpen: boolean; // Adicione o estado isDrawerOpen
+  toggleDrawer: () => void;
 }
 
-export function GSideNav({ children }: GSideNavProps) {
+export function GSideNav({ children, isDrawerOpen, toggleDrawer }: GSideNavProps) {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const [open, setOpen] = useState(false);
-
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
 
   const ListItemLink = ({ children, label, to, onClick }: ListItemLink) => {
     const handleClick = (event: React.MouseEvent) => {
@@ -69,59 +62,48 @@ export function GSideNav({ children }: GSideNavProps) {
 
   const ItemsListMap = ItemsList.map((item) => {
     return (
-      <ListItemLink key={item.label} label={item.label} to={item.to}>
+      <ListItemLink key={item.label} label={item.label} to={item.to} onClick={toggleDrawer}>
         {item.children}
       </ListItemLink>
     );
   });
 
   return (
-    <>
-      <AppBar position="fixed" sx={{ height: theme.spacing(8), zIndex: 2000 }}>
-        <Toolbar>
-          <IconButton onClick={toggleDrawer}>
-            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Box display='flex'>
-        <Drawer variant={smDown ? 'temporary' : 'persistent'} anchor="left" open={open} onClose={toggleDrawer}
-          sx={{
-            transition: 'margin 225ms cubic-bezier(0.4, 0, 0.6, 1)',
-          }}
-        >
-
-          <Box display='flex' alignItems='center' justifyContent='flex-end' padding={theme.spacing(0, 1)}>
-          </Box>
-          <Box paddingTop={7} width={theme.spacing(28)} height='100%' display='flex' flexDirection='column'>
-            <Box width="100%" height={theme.spacing(20)} display='flex' alignItems='center' justifyContent='center'>
-              <Avatar
-                sx={{ height: theme.spacing(12), width: theme.spacing(12) }}
-                src='https://media.licdn.com/dms/image/C4D03AQGhWw72_nxcSQ/profile-displayphoto-shrink_200_200/0/1668042495028?e=1704326400&v=beta&t=g9Ar2RXpXV-gaIJ_6cvpLXirT9LtzO9k8Jz8HKy1J0s'
-              />
-            </Box>
-
-            <Divider />
-
-            <Box flex={1}>
-              <List component="nav">
-                {ItemsListMap}
-              </List>
-            </Box>
-          </Box>
-        </Drawer >
-        <Box
-          paddingTop={10}
-          height='100vh'
-          sx={{
-            marginLeft: open ? (smDown ? 2 : theme.spacing(30)) : 2,
-            transition: 'margin 225ms cubic-bezier(0.4, 0, 0.6, 1)',
-          }}
-        >
-          {children}
+    <Box display='flex'>
+      <Drawer variant={smDown ? 'temporary' : 'persistent'} anchor="left" open={isDrawerOpen} onClose={toggleDrawer}
+        sx={{
+          transition: 'margin 225ms cubic-bezier(0.4, 0, 0.6, 1)',
+        }}
+      >
+        <Box display='flex' alignItems='center' justifyContent='flex-end' padding={theme.spacing(0, 1)}>
         </Box>
-      </Box >
-    </>
+        <Box paddingTop={7} width={theme.spacing(28)} height='100%' display='flex' flexDirection='column'>
+          <Box width="100%" height={theme.spacing(20)} display='flex' alignItems='center' justifyContent='center'>
+            <Avatar
+              sx={{ height: theme.spacing(12), width: theme.spacing(12) }}
+              src='https://media.licdn.com/dms/image/C4D03AQGhWw72_nxcSQ/profile-displayphoto-shrink_200_200/0/1668042495028?e=1704326400&v=beta&t=g9Ar2RXpXV-gaIJ_6cvpLXirT9LtzO9k8Jz8HKy1J0s'
+            />
+          </Box>
+
+          <Divider />
+
+          <Box flex={1}>
+            <List component="nav">
+              {ItemsListMap}
+            </List>
+          </Box>
+        </Box>
+      </Drawer>
+      <Box
+        paddingTop={10}
+        height='100vh'
+        sx={{
+          marginLeft: isDrawerOpen ? (smDown ? 2 : theme.spacing(30)) : 2,
+          transition: 'margin 225ms cubic-bezier(0.4, 0, 0.6, 1)',
+        }}
+      >
+        {children}
+      </Box>
+    </Box>
   );
 }
-
