@@ -1,17 +1,29 @@
+
+
 'use client'
 import React, { useState, useEffect, useRef, ReactNode } from 'react';
-import { Box, Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, IconButton, ListItem, ListItemIcon, ListItemText, useTheme, ListItemButton } from '@mui/material';
+import { Box, Drawer, CssBaseline, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, useTheme } from '@mui/material';
 import { Menu as MenuIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon, Inbox as InboxIcon, Mail as MailIcon } from '@mui/icons-material';
-
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import Link from 'next/link';
 interface GDrawerProps {
-  children: ReactNode
+  children: ReactNode;
+  open: boolean;
+  toggleDrawer: () => void; // Adicione a propriedade 'toggleDrawer'
 }
 
-const drawerWidth = 240; // Largura do Drawer quando estiver aberto
+const options = [
+  { text: 'Home', href: '/', icon: <InboxIcon /> },
+  { text: 'Starred', href: '#', icon: <AcUnitIcon /> },
+  { text: 'Send email', href: '#', icon: <MailIcon /> },
+  { text: 'Drafts', href: '#', icon: <AccessAlarmIcon /> },
+];
 
-export function GDrawer({ children }: GDrawerProps) {
+const drawerWidth = 200;
+
+export function GDrawer({ children, open, toggleDrawer }: GDrawerProps) {
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
   const inboxIconRef = useRef(null);
   const [iconWidth, setIconWidth] = useState(0);
 
@@ -23,23 +35,9 @@ export function GDrawer({ children }: GDrawerProps) {
     }
   }, []);
 
-  const handleToggleDrawer = () => {
-    setOpen(!open); // Inverte o estado do Drawer
-  };
-
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
-        <Toolbar>
-          <IconButton color="inherit" aria-label={open ? "close drawer" : "open drawer"} onClick={handleToggleDrawer} edge="start" sx={{ marginRight: 2 }}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <Drawer
         variant="permanent"
         open={open}
@@ -48,38 +46,29 @@ export function GDrawer({ children }: GDrawerProps) {
           '& .MuiDrawer-paper': {
             width: open ? `${drawerWidth}px` : `${iconWidth}px`,
             boxSizing: 'border-box',
-            transition: 'width 0.2s', // Duração da transição
+            transition: 'width 0.2s',
           },
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: open ? 'end' : 'center', paddingTop: '100px' }}>
-          <IconButton onClick={handleToggleDrawer}>
-            {open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          <IconButton onClick={toggleDrawer}>
+            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </Box>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton alignItems="center">
-                <ListItemIcon ref={inboxIconRef}>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                {open && <ListItemText primary={text} />}
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton alignItems="center">
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                {open && <ListItemText primary={text} />}
-              </ListItemButton>
+          {options.map((option) => (
+            <ListItem key={option.href} disablePadding>
+              <Link style={{
+                width: '100%', color: 'initial', textDecoration: 'none',
+              }} href={option.href}>
+                <ListItemButton alignItems="center">
+                  <ListItemIcon ref={inboxIconRef}>
+                    {option.icon}
+                  </ListItemIcon>
+                  {open && <ListItemText primary={option.text} />}
+                </ListItemButton>
+              </Link>
             </ListItem>
           ))}
         </List>
@@ -94,7 +83,6 @@ export function GDrawer({ children }: GDrawerProps) {
       >
         {children}
       </Box>
-
     </Box>
   );
 }

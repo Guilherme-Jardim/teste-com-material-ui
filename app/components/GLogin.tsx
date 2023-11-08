@@ -10,9 +10,11 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAppThemeContext } from '@/app/context/theme/useAppTheme';
 import Link from 'next/link';
+import { IconButton } from '@mui/material';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 function Copyright(props: any) {
   return (
@@ -24,26 +26,11 @@ function Copyright(props: any) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
-
 export function GLogin() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
-
-
-  const { toggleTheme } = useAppThemeContext();
-
+  const { toggleTheme, themeName } = useAppThemeContext();
   const toggleButtonHandler = () => {
     toggleTheme();
   };
-
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -112,21 +99,13 @@ export function GLogin() {
           </Grid>
 
         </Box>
-        <Button
-          sx={{ mt: 4 }}
-          variant='contained'
-          onClick={toggleButtonHandler}
-        >
-          Alterar Theme
-        </Button>
+        <IconButton sx={{ ml: 1 }} onClick={toggleButtonHandler} color="inherit">
+          {themeName === 'dark' ? <Brightness4Icon /> : <Brightness7Icon />}
+        </IconButton>
       </Box>
-      <Link href="/teste1">
-        <Button> teste public1</Button>
-      </Link>
+
       <Copyright sx={{ mt: 8, mb: 4 }} />
-      <Link href="/teste1">
-        <Button> teste public1</Button>
-      </Link>
+
     </Container>
   );
 }

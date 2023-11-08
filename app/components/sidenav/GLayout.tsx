@@ -1,8 +1,8 @@
 'use client'
-import { ReactNode, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { Box } from '@mui/material';
-import { GFooter } from './GFooter';
-import { GSideNav } from './GSideNav';
+import { GAppBar } from './GAppBar';
+import { GDrawer } from './GDrawer';
 
 interface GLayoutProps {
   children: ReactNode;
@@ -16,11 +16,11 @@ export function GLayout({ children }: GLayoutProps) {
   };
 
   return (
-    <Box>
-      <GFooter open={isDrawerOpen} onToggleDrawer={toggleDrawer} />
-      <GSideNav isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer}>
+    <Box sx={{ display: 'flex' }}>
+      <GAppBar open={isDrawerOpen} handleToggleDrawer={toggleDrawer} />
+      <GDrawer open={isDrawerOpen} toggleDrawer={toggleDrawer}>
         {children}
-      </GSideNav>
+      </GDrawer>
     </Box>
   );
 }
