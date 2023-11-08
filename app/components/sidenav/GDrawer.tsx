@@ -9,7 +9,7 @@ interface GDrawerProps {
 
 const drawerWidth = 240; // Largura do Drawer quando estiver aberto
 
-export function MiniDrawer({ children }: GDrawerProps) {
+export function GDrawer({ children }: GDrawerProps) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const inboxIconRef = useRef(null);
@@ -84,9 +84,17 @@ export function MiniDrawer({ children }: GDrawerProps) {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, marginLeft: open ? drawerWidth : iconWidth, transition: theme.transitions.create('margin', { easing: theme.transitions.easing.sharp, duration: 500 }) }}>
+      <Box
+        paddingTop={10}
+        height='100vh'
+        sx={{
+          marginLeft: open ? `calc(${drawerWidth}px + 10px)` : `calc(${iconWidth}px + 10px)`,
+          transition: 'margin 0.2s', // Duração da transição
+        }}
+      >
         {children}
       </Box>
+
     </Box>
   );
 }

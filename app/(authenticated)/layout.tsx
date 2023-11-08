@@ -4,6 +4,7 @@ import { GLayout } from '../components/sidenav/GLayout';
 import { GSideNav } from '../components/sidenav/GSideNav';
 import { GFooter } from '../components/sidenav/GFooter';
 import { useState } from 'react';
+import { GDrawer } from '../components/sidenav/GDrawer';
 
 export const metadata = {
   title: 'Next.js App Router + Material UI v5',
@@ -17,9 +18,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <ThemeRegistry>
-          <GLayout>
+          <GDrawer>
             {children}
-          </GLayout>
+          </GDrawer>
         </ThemeRegistry>
       </body>
     </html>
