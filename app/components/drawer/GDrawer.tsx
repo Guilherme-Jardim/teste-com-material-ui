@@ -4,27 +4,22 @@
 import React, { useState, useEffect, useRef, ReactNode } from 'react';
 import { Box, Drawer, CssBaseline, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, useTheme } from '@mui/material';
 import { Menu as MenuIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon, Inbox as InboxIcon, Mail as MailIcon } from '@mui/icons-material';
-import AcUnitIcon from '@mui/icons-material/AcUnit';
-import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-import Link from 'next/link';
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'; import { GItemList } from './GItemList';
+import HomeIcon from '@mui/icons-material/Home';
+
 interface GDrawerProps {
   children: ReactNode;
   open: boolean;
   toggleDrawer: () => void; // Adicione a propriedade 'toggleDrawer'
 }
 
-const options = [
-  { text: 'Home', href: '/', icon: <InboxIcon /> },
-  { text: 'Starred', href: '#', icon: <AcUnitIcon /> },
-  { text: 'Send email', href: '#', icon: <MailIcon /> },
-  { text: 'Drafts', href: '#', icon: <AccessAlarmIcon /> },
-];
 
-const drawerWidth = 200;
 
-export function GDrawer({ children, open, toggleDrawer }: GDrawerProps) {
+const drawerWidth = 240; // Largura do Drawer quando estiver aberto
+
+export function GDrawer({ children, open, toggleDrawer }: GDrawerProps) { // Receba 'open' como uma prop
   const theme = useTheme();
-  const inboxIconRef = useRef(null);
+  const inboxIconRef = useRef<HTMLDivElement>(null);
   const [iconWidth, setIconWidth] = useState(0);
 
   useEffect(() => {
@@ -57,22 +52,12 @@ export function GDrawer({ children, open, toggleDrawer }: GDrawerProps) {
         </Box>
         <Divider />
         <List>
-          {options.map((option) => (
-            <ListItem key={option.href} disablePadding>
-              <Link style={{
-                width: '100%', color: 'initial', textDecoration: 'none',
-              }} href={option.href}>
-                <ListItemButton alignItems="center">
-                  <ListItemIcon ref={inboxIconRef}>
-                    {option.icon}
-                  </ListItemIcon>
-                  {open && <ListItemText primary={option.text} />}
-                </ListItemButton>
-              </Link>
-            </ListItem>
-          ))}
+          <GItemList href="/" icon={<HomeIcon />} text="Home" open={open} inboxIconRef={inboxIconRef} />
+          <GItemList href="#" icon={<AddToPhotosIcon />} text="Cadastros" open={open} inboxIconRef={inboxIconRef} />
         </List>
       </Drawer>
+
+
       <Box
         paddingTop={10}
         height='100vh'
