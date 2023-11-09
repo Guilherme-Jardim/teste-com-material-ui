@@ -1,26 +1,23 @@
-
-
-'use client'
 import React, { useState, useEffect, useRef, ReactNode } from 'react';
-import { Box, Drawer, CssBaseline, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, useTheme } from '@mui/material';
-import { Menu as MenuIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon, Inbox as InboxIcon, Mail as MailIcon } from '@mui/icons-material';
-import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'; import { GItemList } from './GItemList';
-import HomeIcon from '@mui/icons-material/Home';
+import { Box, Drawer, CssBaseline, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, useTheme, Collapse } from '@mui/material';
+import { Menu as MenuIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@mui/icons-material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import Link from 'next/link';
 
 interface GDrawerProps {
   children: ReactNode;
   open: boolean;
-  toggleDrawer: () => void; // Adicione a propriedade 'toggleDrawer'
+  toggleDrawer: () => void;
 }
 
+const drawerWidth = 240;
 
-
-const drawerWidth = 240; // Largura do Drawer quando estiver aberto
-
-export function GDrawer({ children, open, toggleDrawer }: GDrawerProps) { // Receba 'open' como uma prop
+export function GDrawer({ children, open, toggleDrawer }: GDrawerProps) {
   const theme = useTheme();
   const inboxIconRef = useRef<HTMLDivElement>(null);
   const [iconWidth, setIconWidth] = useState(0);
+  const [submenuOpen, setSubmenuOpen] = useState(false);
+  const [subsubmenuOpen, setSubsubmenuOpen] = useState(false);
 
   useEffect(() => {
     const inboxIconElement = inboxIconRef.current;
@@ -29,6 +26,21 @@ export function GDrawer({ children, open, toggleDrawer }: GDrawerProps) { // Rec
       setIconWidth(parseInt(inboxIconWidth));
     }
   }, []);
+
+  const handleSubmenuClick = () => {
+    setSubmenuOpen(!submenuOpen);
+  };
+
+  const handleSubsubmenuClick = () => {
+    setSubsubmenuOpen(!subsubmenuOpen);
+  };
+
+  useEffect(() => {
+    if (!open) {
+      setSubmenuOpen(false);
+      setSubsubmenuOpen(false);
+    }
+  }, [open]);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -52,18 +64,59 @@ export function GDrawer({ children, open, toggleDrawer }: GDrawerProps) { // Rec
         </Box>
         <Divider />
         <List>
-          <GItemList href="/" icon={<HomeIcon />} text="Home" open={open} inboxIconRef={inboxIconRef} />
-          <GItemList href="#" icon={<AddToPhotosIcon />} text="Cadastros" open={open} inboxIconRef={inboxIconRef} />
+          <ListItem disablePadding>
+            <Link href="/">
+              <ListItemButton alignItems="center">
+                <ListItemIcon ref={inboxIconRef}>
+                  <MenuIcon />
+                </ListItemIcon>
+                {open && <ListItemText primary="Home" />}
+              </ListItemButton>
+            </Link>
+          </ListItem>
+          <ListItem button onClick={handleSubmenuClick} >
+            <ListItemIcon>
+              <MenuIcon />
+            </ListItemIcon>
+            <ListItemText primary="Submenu" />
+            {submenuOpen ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={submenuOpen} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding sx={{ marginLeft: '20px' }}>
+              <ListItem button onClick={handleSubsubmenuClick} sx={{ paddingLeft: '20px' }}>
+                <ListItemIcon>
+                  <MenuIcon />
+                </ListItemIcon>
+                <ListItemText primary="Subsubmenu" />
+                {subsubmenuOpen ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={subsubmenuOpen} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding sx={{ marginLeft: '20px' }}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <MenuIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Subsubmenu Item 1" />
+                  </ListItem>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <MenuIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Subsubmenu Item 2" />
+                  </ListItem>
+                </List>
+              </Collapse>
+            </List>
+          </Collapse>
         </List>
       </Drawer>
-
 
       <Box
         paddingTop={10}
         height='100vh'
         sx={{
           marginLeft: open ? `calc(${drawerWidth}px + 10px)` : `calc(${iconWidth}px + 10px)`,
-          transition: 'margin 0.2s', // Duração da transição
+          transition: 'margin 0.2s',
         }}
       >
         {children}
