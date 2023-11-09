@@ -270,7 +270,8 @@ export function GDrawer({ children, open, toggleDrawer }: GDrawerProps) {
             menuicon={menus[0].menuicon}
             hrefmenu={menus[0].hrefmenu}
             submenus={menus[0].submenus}
-          />        </List>
+          />
+        </List>
       </Drawer >
 
       <Box

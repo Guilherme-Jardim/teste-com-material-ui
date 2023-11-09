@@ -2,7 +2,7 @@
 import React, { ReactNode, useState } from 'react';
 import { Box } from '@mui/material';
 import { GAppBar } from './GAppBar';
-import { GDrawer } from '../drawer/GDrawer';
+import { GDrawer } from './drawer/GDrawer';
 
 interface GLayoutProps {
   children: ReactNode;
