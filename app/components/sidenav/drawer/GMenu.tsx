@@ -55,20 +55,20 @@ export function GMenu({ menu, menuhref, menuicon, menutext, submenu, handleToggl
 
   return (
     <>
-      <Link href={menuhref}>
+      <Link href={menuhref} style={{ textDecoration: 'none', color: 'initial' }}>
         <ListItem button onClick={handleSubmenuClick} sx={{ width: '100%', height: '50px' }}> {/* Estilização do ListItem */}
           <ListItemIcon>{menuicon}</ListItemIcon>
-          <ListItemText primary={menutext} />
+          {open && <ListItemText primary={menutext} />}
           {submenuOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
       </Link>
       <Collapse sx={{ width: '100%' }} in={submenuOpen} timeout="auto" unmountOnExit>
         <List component="div" disablePadding sx={{}}>
           {submenu.map((subItem, index) => (
-            <Link key={index} href={subItem.subhref}>
+            <Link key={index} href={subItem.subhref} style={{ textDecoration: 'none', color: 'initial' }}>
               <ListItem button onClick={handleSubsubmenuClick} sx={{ width: '100%', paddingLeft: '40px', height: '50px' }}> {/* Estilização do ListItem */}
                 <ListItemIcon>{subItem.subicon}</ListItemIcon>
-                <ListItemText primary={subItem.subtext} />
+                {open && <ListItemText primary={subItem.subtext} />}
                 {subsubmenuOpen ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
             </Link>
@@ -76,10 +76,10 @@ export function GMenu({ menu, menuhref, menuicon, menutext, submenu, handleToggl
           <Collapse sx={{ width: '100%' }} in={subsubmenuOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding >
               {submenu.map((subItem, index) => (
-                <Link key={index} href={subItem.subsubmenu.subsubhref}>
+                <Link key={index} href={subItem.subsubmenu.subsubhref} style={{ textDecoration: 'none', color: 'initial' }}>
                   <ListItem button sx={{ width: '100%', paddingLeft: '60px', height: '50px' }}> {/* Estilização do ListItem */}
                     <ListItemIcon>{subItem.subsubmenu.subsubicon}</ListItemIcon>
-                    <ListItemText primary={subItem.subsubmenu.subsubtext} />
+                    {open && <ListItemText primary={subItem.subsubmenu.subsubtext} />}
                   </ListItem>
                 </Link>
               ))}
