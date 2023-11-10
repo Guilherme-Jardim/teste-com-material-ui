@@ -113,9 +113,9 @@ export function GDrawer({ children, open, toggleDrawer }: GDrawerProps) {
           </IconButton>
         </Box>
         <Divider />
-        <List>
-          <ListItem disablePadding sx={{ height: '50px' }}>
-            <Link href="/">
+        <List >
+          <ListItem disablePadding >
+            <Link style={{ width: '100%', height: '50px' }} href="/">
               <ListItemButton alignItems="center">
                 <ListItemIcon ref={inboxIconRef}>
                   <MenuIcon />
