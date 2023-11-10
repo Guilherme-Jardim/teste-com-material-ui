@@ -94,51 +94,42 @@
 
 
 
-
-
-
-
-
-
-
-
-
 import React, { useState } from 'react';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { ListItemButton, ListItemIcon, ListItemText, Collapse } from '@mui/material';
 import { List, ListItem } from '@mui/material';
 import Link from 'next/link';
 
+interface SubsubmenuProps {
+  subsubmenu: string;
+  subsubmenutext: string;
+  subsubmenuicon: React.ReactNode;
+  hrefsubsubmenu: string;
+}
+
+interface SubmenuProps {
+  submenu: string;
+  submenutext: string;
+  submenuicon: React.ReactNode;
+  hrefsubmenu: string;
+  subsubmenus: SubsubmenuProps[];
+}
+
 interface GMenuProps {
   menu: string;
   menutext: string;
   menuicon: React.ReactNode;
   hrefmenu: string;
-  submenus: {
-    submenu: string;
-    submenutext: string;
-    submenuicon: React.ReactNode;
-    hrefsubmenu: string;
-    subsubmenus: {
-      subsubmenu: string;
-      subsubmenutext: string;
-      subsubmenuicon: React.ReactNode;
-      hrefsubsubmenu: string;
-    }[];
-  }[];
+  submenus: SubmenuProps[];
 }
 
-
-
-
-
-
-export function GMenu({ menu, menutext, menuicon, hrefmenu, submenus }: GMenuProps) {
+export function GMenuold({ menu, menutext, menuicon, hrefmenu, submenus }: GMenuProps) {
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const [subsubmenuOpen, setSubsubmenuOpen] = useState(false);
 
   const handleSubmenuClick = () => {
     setSubmenuOpen(!submenuOpen);
+    setSubsubmenuOpen(false);
   };
 
   const handleSubsubmenuClick = () => {
@@ -147,7 +138,6 @@ export function GMenu({ menu, menutext, menuicon, hrefmenu, submenus }: GMenuPro
 
   return (
     <>
-      {/* Início do map do menu */}
       <Link href={hrefmenu}>
         <ListItem style={{ height: '50px' }} button onClick={handleSubmenuClick}>
           <ListItemIcon>
@@ -157,10 +147,8 @@ export function GMenu({ menu, menutext, menuicon, hrefmenu, submenus }: GMenuPro
           {submenuOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
       </Link>
-      {/* Fim do map do menu */}
       <Collapse in={submenuOpen} timeout="auto" unmountOnExit>
         <List component="div" disablePadding sx={{ paddingLeft: '20px' }}>
-          {/* Map do submenu */}
           {submenus.map((submenu, index) => (
             <React.Fragment key={index}>
               <Link href={submenu.hrefsubmenu}>
@@ -172,12 +160,10 @@ export function GMenu({ menu, menutext, menuicon, hrefmenu, submenus }: GMenuPro
                   {subsubmenuOpen ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
               </Link>
-              {/* Fim do map do submenu */}
               <Collapse in={subsubmenuOpen} timeout="auto" unmountOnExit>
                 <List component="div" sx={{ paddingLeft: '20px' }}>
-                  {/* Map do subsubmenu */}
-                  {submenu.subsubmenus.map((subsubmenu, index) => (
-                    <Link href={subsubmenu.hrefsubsubmenu} key={index}>
+                  {submenu.subsubmenus.map((subsubmenu, subIndex) => (
+                    <Link href={subsubmenu.hrefsubsubmenu} key={subIndex}>
                       <ListItem style={{ height: '50px' }}>
                         <ListItemIcon>
                           {subsubmenu.subsubmenuicon}
@@ -186,7 +172,6 @@ export function GMenu({ menu, menutext, menuicon, hrefmenu, submenus }: GMenuPro
                       </ListItem>
                     </Link>
                   ))}
-                  {/* Fim do map do subsubmenu */}
                 </List>
               </Collapse>
             </React.Fragment>
